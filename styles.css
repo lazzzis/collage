@@ -30,14 +30,13 @@ body {
   min-height: 100vh;
   padding: 48px 6vw 64px;
   display: grid;
-  gap: 36px;
+  gap: 28px;
 }
 
-.hero {
+.title-block {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: 32px;
-  align-items: center;
+  gap: 10px;
+  max-width: 68ch;
 }
 
 .eyebrow {
@@ -58,6 +57,13 @@ h1 {
   font-size: 16px;
   color: var(--muted);
   max-width: 40ch;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 28px;
+  align-items: start;
 }
 
 .preview-wrap {
@@ -173,7 +179,7 @@ h1 {
 
 .controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
@@ -264,7 +270,7 @@ h1 {
 }
 
 @media (max-width: 900px) {
-  .hero {
+  .layout {
     grid-template-columns: 1fr;
   }
 
