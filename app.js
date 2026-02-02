@@ -39,7 +39,12 @@ function updateCaptionColor() {
 }
 
 function updateCaptionFont() {
-  preview.style.setProperty("--caption-font", captionFont.value);
+  const value = captionFont.value.trim();
+  if (value) {
+    preview.style.setProperty("--caption-font", value);
+  } else {
+    preview.style.removeProperty("--caption-font");
+  }
 }
 
 function handleUpload(event) {
@@ -116,7 +121,9 @@ function exportCollage() {
   if (text) {
     const fontSize = Math.max(16, Math.round(bottomArea * 0.38));
     ctx.fillStyle = computed.getPropertyValue("--caption-color").trim();
-    ctx.font = `${fontSize}px ${captionFont.value}`;
+    const fontStack =
+      captionFont.value.trim() || computed.getPropertyValue("--caption-font").trim();
+    ctx.font = `${fontSize}px ${fontStack}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     const textY = outputHeight - bottomArea / 2;
@@ -134,7 +141,7 @@ borderSize.addEventListener("input", updateBorderSize);
 bottomBorderSize.addEventListener("input", updateBottomBorder);
 caption.addEventListener("input", updateCaption);
 captionColor.addEventListener("input", updateCaptionColor);
-captionFont.addEventListener("change", updateCaptionFont);
+captionFont.addEventListener("input", updateCaptionFont);
 exportButton.addEventListener("click", exportCollage);
 
 Array.from(document.querySelectorAll("input[type=\"file\"]")).forEach((input) => {

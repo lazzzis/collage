@@ -182,15 +182,6 @@ h1 {
   background: #fffdf9;
 }
 
-.field select {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(31, 29, 27, 0.15);
-  font-size: 14px;
-  background: #fffdf9;
-  font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
-}
-
 .field input[type="range"] {
   width: 100%;
 }
