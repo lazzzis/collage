@@ -11,6 +11,7 @@
   --bottom-border-size: 18px;
   --caption-color: #f8f3e9;
   --caption-text: "";
+  --caption-font: "Space Grotesk", "Noto Sans SC", sans-serif;
 }
 
 * {
@@ -133,7 +134,7 @@ h1 {
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: var(--caption-font);
   text-align: center;
   color: var(--caption-color);
   pointer-events: none;
@@ -179,6 +180,15 @@ h1 {
   border: 1px solid rgba(31, 29, 27, 0.15);
   font-size: 14px;
   background: #fffdf9;
+}
+
+.field select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(31, 29, 27, 0.15);
+  font-size: 14px;
+  background: #fffdf9;
+  font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
 }
 
 .field input[type="range"] {

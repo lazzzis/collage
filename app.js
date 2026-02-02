@@ -5,6 +5,7 @@ const borderSize = document.getElementById("borderSize");
 const borderSizeValue = document.getElementById("borderSizeValue");
 const caption = document.getElementById("caption");
 const captionColor = document.getElementById("captionColor");
+const captionFont = document.getElementById("captionFont");
 const bottomBorderSize = document.getElementById("bottomBorderSize");
 const bottomBorderValue = document.getElementById("bottomBorderValue");
 const exportButton = document.getElementById("exportButton");
@@ -35,6 +36,10 @@ function updateCaption() {
 
 function updateCaptionColor() {
   preview.style.setProperty("--caption-color", captionColor.value);
+}
+
+function updateCaptionFont() {
+  preview.style.setProperty("--caption-font", captionFont.value);
 }
 
 function handleUpload(event) {
@@ -111,7 +116,7 @@ function exportCollage() {
   if (text) {
     const fontSize = Math.max(16, Math.round(bottomArea * 0.38));
     ctx.fillStyle = computed.getPropertyValue("--caption-color").trim();
-    ctx.font = `${fontSize}px \"Space Grotesk\", \"Noto Sans SC\", sans-serif`;
+    ctx.font = `${fontSize}px ${captionFont.value}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     const textY = outputHeight - bottomArea / 2;
@@ -129,6 +134,7 @@ borderSize.addEventListener("input", updateBorderSize);
 bottomBorderSize.addEventListener("input", updateBottomBorder);
 caption.addEventListener("input", updateCaption);
 captionColor.addEventListener("input", updateCaptionColor);
+captionFont.addEventListener("change", updateCaptionFont);
 exportButton.addEventListener("click", exportCollage);
 
 Array.from(document.querySelectorAll("input[type=\"file\"]")).forEach((input) => {
@@ -139,3 +145,4 @@ updateBorderColor();
 updateBorderSize();
 updateBottomBorder();
 updateCaptionColor();
+updateCaptionFont();
