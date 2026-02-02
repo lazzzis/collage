@@ -6,6 +6,8 @@ const borderSizeValue = document.getElementById("borderSizeValue");
 const caption = document.getElementById("caption");
 const captionColor = document.getElementById("captionColor");
 const captionFont = document.getElementById("captionFont");
+const toggleRadius = document.getElementById("toggleRadius");
+const toggleInnerBorder = document.getElementById("toggleInnerBorder");
 const bottomBorderSize = document.getElementById("bottomBorderSize");
 const bottomBorderValue = document.getElementById("bottomBorderValue");
 const exportButton = document.getElementById("exportButton");
@@ -47,6 +49,18 @@ function updateCaptionFont() {
   }
 }
 
+function updateRadius() {
+  preview.style.setProperty("--panel-radius", toggleRadius.checked ? "8px" : "0px");
+}
+
+function updateInnerBorder() {
+  if (toggleInnerBorder.checked) {
+    preview.style.removeProperty("--gap-size");
+  } else {
+    preview.style.setProperty("--gap-size", "0px");
+  }
+}
+
 function handleUpload(event) {
   const input = event.target;
   const slotIndex = Number(input.dataset.slot);
@@ -79,6 +93,21 @@ function drawCover(ctx, img, x, y, w, h) {
   ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
 }
 
+function roundedRectPath(ctx, x, y, w, h, r) {
+  const radius = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + w - radius, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+  ctx.lineTo(x + w, y + h - radius);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+  ctx.lineTo(x + radius, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+}
+
 function exportCollage() {
   if (images.some((img) => !img)) {
     window.alert("请先上传三张图片后再导出。");
@@ -89,12 +118,14 @@ function exportCollage() {
   const computed = getComputedStyle(preview);
   const borderSizeValue = parseFloat(computed.getPropertyValue("--border-size")) || 0;
   const bottomBorderValue = parseFloat(computed.getPropertyValue("--bottom-border-size")) || 0;
+  const gapValue = parseFloat(computed.getPropertyValue("--gap-size")) || borderSizeValue;
+  const panelRadius = parseFloat(computed.getPropertyValue("--panel-radius")) || 0;
 
   const outputWidth = 1800;
   const scale = outputWidth / previewRect.width;
   const outputHeight = Math.round(outputWidth * (previewRect.height / previewRect.width));
   const border = borderSizeValue * scale;
-  const gap = border;
+  const gap = gapValue * scale;
   const bottomExtra = bottomBorderValue * scale;
   const bottomArea = border + bottomExtra;
   const innerWidth = outputWidth - border * 2;
@@ -102,6 +133,7 @@ function exportCollage() {
   const panelsHeight = innerHeight - gap * 2;
   const panelHeight = panelsHeight / 3;
   const panelWidth = innerWidth;
+  const radius = panelRadius * scale;
 
   const canvas = document.createElement("canvas");
   canvas.width = outputWidth;
@@ -114,8 +146,20 @@ function exportCollage() {
   images.forEach((img, index) => {
     const x = border;
     const y = border + index * (panelHeight + gap);
+    ctx.save();
+    roundedRectPath(ctx, x, y, panelWidth, panelHeight, radius);
+    ctx.clip();
     drawCover(ctx, img, x, y, panelWidth, panelHeight);
+    ctx.restore();
   });
+
+  // Repaint borders to guarantee visibility even if image draw bleeds by a pixel.
+  ctx.fillStyle = computed.getPropertyValue("--border-color").trim();
+  const bottomAreaHeight = border + bottomExtra;
+  ctx.fillRect(0, 0, outputWidth, border);
+  ctx.fillRect(0, 0, border, outputHeight);
+  ctx.fillRect(outputWidth - border, 0, border, outputHeight);
+  ctx.fillRect(0, outputHeight - bottomAreaHeight, outputWidth, bottomAreaHeight);
 
   const text = caption.value.trim();
   if (text) {
@@ -142,6 +186,8 @@ bottomBorderSize.addEventListener("input", updateBottomBorder);
 caption.addEventListener("input", updateCaption);
 captionColor.addEventListener("input", updateCaptionColor);
 captionFont.addEventListener("input", updateCaptionFont);
+toggleRadius.addEventListener("change", updateRadius);
+toggleInnerBorder.addEventListener("change", updateInnerBorder);
 exportButton.addEventListener("click", exportCollage);
 
 Array.from(document.querySelectorAll("input[type=\"file\"]")).forEach((input) => {
@@ -153,3 +199,5 @@ updateBorderSize();
 updateBottomBorder();
 updateCaptionColor();
 updateCaptionFont();
+updateRadius();
+updateInnerBorder();

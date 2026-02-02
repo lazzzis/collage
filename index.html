@@ -60,8 +60,20 @@
           </div>
           <div class="field">
             <label>边框粗细</label>
-            <input type="range" id="borderSize" min="0" max="24" value="6" />
-            <span class="value" id="borderSizeValue">6 px</span>
+            <input type="range" id="borderSize" min="0" max="24" value="11" />
+            <span class="value" id="borderSizeValue">11 px</span>
+          </div>
+          <div class="field inline">
+            <label>
+              <input type="checkbox" id="toggleRadius" checked />
+              显示圆角
+            </label>
+          </div>
+          <div class="field inline">
+            <label>
+              <input type="checkbox" id="toggleInnerBorder" checked />
+              图片间插入边框
+            </label>
           </div>
         </div>
 
@@ -81,12 +93,12 @@
               type="text"
               id="captionFont"
               placeholder='例如: "Noto Sans SC", "PingFang SC", sans-serif'
-              value='"Space Grotesk", "Noto Sans SC", sans-serif'
+              value='"Nunito", "Source Serif Pro", "Fira Sans", sans-serif'
             />
           </div>
           <div class="field">
             <label>底边加粗</label>
-            <input type="range" id="bottomBorderSize" min="0" max="48" value="18" />
+            <input type="range" id="bottomBorderSize" min="0" max="48" value="26" />
             <span class="value" id="bottomBorderValue">18 px</span>
           </div>
         </div>
