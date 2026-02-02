@@ -190,7 +190,7 @@ toggleRadius.addEventListener("change", updateRadius);
 toggleInnerBorder.addEventListener("change", updateInnerBorder);
 exportButton.addEventListener("click", exportCollage);
 
-Array.from(document.querySelectorAll("input[type=\"file\"]")).forEach((input) => {
+Array.from(document.querySelectorAll(".panel-input")).forEach((input) => {
   input.addEventListener("change", handleUpload);
 });
 
