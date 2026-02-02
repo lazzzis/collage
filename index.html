@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3 图横向拼接 Collage</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">3 张横向图片拼接</p>
+          <h1>Collage 预览编辑器</h1>
+          <p class="sub">上传三张横向图片，竖向拼接显示，调整边框与底部文字，即时预览拼接效果。</p>
+        </div>
+        <div class="preview-wrap">
+          <div class="preview" id="preview">
+            <div class="panel" data-index="0">
+              <img alt="图片 1 预览" />
+              <span class="placeholder">图片 1</span>
+            </div>
+            <div class="panel" data-index="1">
+              <img alt="图片 2 预览" />
+              <span class="placeholder">图片 2</span>
+            </div>
+            <div class="panel" data-index="2">
+              <img alt="图片 3 预览" />
+              <span class="placeholder">图片 3</span>
+            </div>
+            <div class="bottom-label" id="bottomLabel"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="controls">
+        <div class="control-card">
+          <h2>上传图片</h2>
+          <div class="upload-grid">
+            <label class="upload">
+              <span>选择图片 1</span>
+              <input type="file" accept="image/*" data-slot="0" />
+            </label>
+            <label class="upload">
+              <span>选择图片 2</span>
+              <input type="file" accept="image/*" data-slot="1" />
+            </label>
+            <label class="upload">
+              <span>选择图片 3</span>
+              <input type="file" accept="image/*" data-slot="2" />
+            </label>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <h2>边框设置</h2>
+          <div class="field">
+            <label>边框颜色</label>
+            <input type="color" id="borderColor" value="#1f1d1b" />
+          </div>
+          <div class="field">
+            <label>边框粗细</label>
+            <input type="range" id="borderSize" min="0" max="24" value="6" />
+            <span class="value" id="borderSizeValue">6 px</span>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <h2>底部文字</h2>
+          <div class="field">
+            <label>文字内容</label>
+            <input type="text" id="caption" placeholder="例如：2026 春季画册" maxlength="64" />
+          </div>
+          <div class="field">
+            <label>文字颜色</label>
+            <input type="color" id="captionColor" value="#f8f3e9" />
+          </div>
+          <div class="field">
+            <label>底边加粗</label>
+            <input type="range" id="bottomBorderSize" min="0" max="48" value="18" />
+            <span class="value" id="bottomBorderValue">18 px</span>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <h2>导出</h2>
+          <button class="primary" id="exportButton">导出拼接图片</button>
+          <p class="hint">导出前请确保三张图片都已上传。</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
