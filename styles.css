@@ -155,6 +155,26 @@ h1 {
   opacity: 0;
 }
 
+.panel::after {
+  content: "Click to replace";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  background: rgba(31, 29, 27, 0.45);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.panel.has-image:hover::after {
+  opacity: 1;
+}
+
 .bottom-label {
   position: absolute;
   left: 0;
