@@ -11,6 +11,7 @@ const toggleInnerBorder = document.getElementById("toggleInnerBorder");
 const bottomBorderSize = document.getElementById("bottomBorderSize");
 const bottomBorderValue = document.getElementById("bottomBorderValue");
 const exportButton = document.getElementById("exportButton");
+const addThirdBtn = document.getElementById("addThirdBtn");
 
 const slots = Array.from(preview.querySelectorAll(".panel"));
 const images = [null, null, null];
@@ -80,6 +81,9 @@ function handleUpload(event) {
     const img = panel.querySelector("img");
     img.src = reader.result;
     panel.classList.add("has-image");
+    if (slotIndex === 2) {
+      preview.classList.add("has-third");
+    }
   };
   reader.readAsDataURL(file);
 }
@@ -109,10 +113,13 @@ function roundedRectPath(ctx, x, y, w, h, r) {
 }
 
 function exportCollage() {
-  if (images.some((img) => !img)) {
-    window.alert("请先上传三张图片后再导出。");
+  if (!images[0] || !images[1]) {
+    window.alert("请先上传前两张图片后再导出。");
     return;
   }
+
+  const activeImages = images.filter(Boolean);
+  const panelCount = activeImages.length;
 
   const previewRect = preview.getBoundingClientRect();
   const computed = getComputedStyle(preview);
@@ -130,8 +137,8 @@ function exportCollage() {
   const bottomArea = border + bottomExtra;
   const innerWidth = outputWidth - border * 2;
   const innerHeight = outputHeight - border * 2 - bottomExtra;
-  const panelsHeight = innerHeight - gap * 2;
-  const panelHeight = panelsHeight / 3;
+  const panelsHeight = innerHeight - gap * (panelCount - 1);
+  const panelHeight = panelsHeight / panelCount;
   const panelWidth = innerWidth;
   const radius = panelRadius * scale;
 
@@ -143,7 +150,7 @@ function exportCollage() {
   ctx.fillStyle = computed.getPropertyValue("--border-color").trim();
   ctx.fillRect(0, 0, outputWidth, outputHeight);
 
-  images.forEach((img, index) => {
+  activeImages.forEach((img, index) => {
     const x = border;
     const y = border + index * (panelHeight + gap);
     ctx.save();
@@ -189,6 +196,9 @@ captionFont.addEventListener("input", updateCaptionFont);
 toggleRadius.addEventListener("change", updateRadius);
 toggleInnerBorder.addEventListener("change", updateInnerBorder);
 exportButton.addEventListener("click", exportCollage);
+addThirdBtn.addEventListener("click", () => {
+  document.querySelector('.panel-input[data-slot="2"]').click();
+});
 
 Array.from(document.querySelectorAll(".panel-input")).forEach((input) => {
   input.addEventListener("change", handleUpload);

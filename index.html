@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>3 图横向拼接 Collage</title>
+    <title>2-3 图横向拼接 Collage</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app">
       <header class="title-block">
-        <p class="eyebrow">3 张横向图片拼接</p>
+        <p class="eyebrow">2-3 张横向图片拼接</p>
         <h1>Collage 预览编辑器</h1>
-        <p class="sub">上传三张横向图片，竖向拼接显示，调整边框与底部文字，即时预览拼接效果。</p>
+        <p class="sub">上传两张横向图片，可选上传第三张，竖向拼接显示，调整边框与底部文字，即时预览拼接效果。</p>
       </header>
 
       <section class="layout">
@@ -70,7 +70,7 @@
         <div class="control-card">
           <h2>导出</h2>
           <button class="primary" id="exportButton">导出拼接图片</button>
-          <p class="hint">导出前请确保三张图片都已上传。</p>
+          <p class="hint">导出前请确保前两张图片已上传，第三张为可选。</p>
         </div>
         </div>
 
@@ -98,19 +98,20 @@
                 aria-label="上传图片 2"
               />
             </div>
-            <div class="panel" data-index="2">
+            <div class="panel panel-optional" data-index="2">
               <img alt="图片 3 预览" />
-              <span class="placeholder">点击上传 图片 3</span>
+              <span class="placeholder">点击上传 图片 3（可选）</span>
               <input
                 class="panel-input"
                 type="file"
                 accept="image/*"
                 data-slot="2"
-                aria-label="上传图片 3"
+                aria-label="上传图片 3（可选）"
               />
             </div>
             <div class="bottom-label" id="bottomLabel"></div>
           </div>
+          <button class="add-third-btn" id="addThirdBtn">+ 添加第三张图片（可选）</button>
         </div>
       </section>
     </main>

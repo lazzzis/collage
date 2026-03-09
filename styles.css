@@ -68,13 +68,41 @@ h1 {
 
 .preview-wrap {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.add-third-btn {
+  appearance: none;
+  border: 1.5px dashed rgba(31, 29, 27, 0.35);
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  align-self: center;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.add-third-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.preview.has-third ~ .add-third-btn,
+.preview-wrap:has(.preview.has-third) .add-third-btn {
+  display: none;
 }
 
 .preview {
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 0;
   background: var(--border-color);
   padding: var(--border-size);
@@ -92,6 +120,18 @@ h1 {
   inset: 0;
   background: linear-gradient(120deg, rgba(0, 0, 0, 0.08), transparent 60%);
   pointer-events: none;
+}
+
+.panel-optional {
+  display: none;
+}
+
+.preview.has-third {
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.preview.has-third .panel-optional {
+  display: flex;
 }
 
 .panel {
